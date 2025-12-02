@@ -3,20 +3,20 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.entando</groupId>
-        <artifactId>entando-maven-root</artifactId>
+        <groupId>ai.villanova</groupId>
+        <artifactId>villanova-maven-root</artifactId>
         <version>7.2.0</version>
         <relativePath/>
     </parent>
-    <groupId>org.entando</groupId>
-    <artifactId>entando-quarkus-parent</artifactId>
+    <groupId>ai.villanova</groupId>
+    <artifactId>villanova-quarkus-parent</artifactId>
     <version>7.3.0</version>
     <packaging>pom</packaging>
 
-    <name>Entando Quarkus Parent POM</name>
-    <description>Entando Quarkus Parent POM</description>
+    <name>Villanova Quarkus Parent POM</name>
+    <description>Villanova Quarkus Parent POM</description>
     <inceptionYear>2019</inceptionYear>
-    <url>https://central.entando.com</url>
+    <url>https://villanova.ai</url>
 
     <!-- REPOSITORIES -->
     <repositories>
@@ -34,8 +34,8 @@
 
     <!-- LICENSE AND INFO -->
     <organization>
-        <name>Entando Inc.</name>
-        <url>http://www.entando.com/</url>
+        <name>Villanova Inc.</name>
+        <url>http://www.villanova.ai/</url>
     </organization>
 
     <licenses>
@@ -57,7 +57,7 @@
 
     <!-- PROPERTIES -->
     <properties>
-        <github.organization>entando-k8s</github.organization>
+        <github.organization>Villanova-AI</github.organization>
         <preDeploymentTestGroups></preDeploymentTestGroups>
         <postDeploymentTestGroups></postDeploymentTestGroups>
         <maven.compiler.source>11</maven.compiler.source>
@@ -65,15 +65,15 @@
         <maven.javadoc.source>11</maven.javadoc.source>
         <skipLicenseDownload>false</skipLicenseDownload>
         <checkstyleConfigLocation>
-            https://raw.githubusercontent.com/entando-k8s/entando-quarkus-parent/ACTIVE-CHECKSTYLE/checkstyle.xml
+            https://raw.githubusercontent.com/Villanova-AI/villanova-quarkus-parent/ACTIVE-CHECKSTYLE/checkstyle.xml
         </checkstyleConfigLocation>
         <owaspSuppressionFileLocation>
             owasp-dependency-check-suppression.xml
         </owaspSuppressionFileLocation>
 
-        <entando.maven.repository.snapshot>
+        <villanova.maven.repository.snapshot>
             https://nexus-jx.apps.serv.run/repository/maven-releases/
-        </entando.maven.repository.snapshot>
+        </villanova.maven.repository.snapshot>
 
         <!--dependencies -->
         <resteasy.version>3.15.1.Final</resteasy.version>
@@ -558,10 +558,10 @@ if [ -n "$(git rev-list $(git branch --show-current)..origin/master)" ]; then
   exit 1
 fi
 cd $(git rev-parse --show-toplevel)
-MODEL_VERSION=$(curl -v -X GET "https://nexus-jx.apps.serv.run/service/rest/v1/search/assets/download?sort=version&repository=maven-releases&maven.groupId=org.entando&maven.artifactId=entando-k8s-custom-model" -H "accept: application/json" 2>&1 | awk -F "/" '/Location/ {print $9}')
-COMMON_VERSION=$(curl -v -X GET "https://nexus-jx.apps.serv.run/service/rest/v1/search/assets/download?sort=version&repository=maven-releases&maven.groupId=org.entando&maven.artifactId=entando-k8s-operator-common" -H "accept: application/json" 2>&1 | awk -F "/" '/Location/ {print $9}')
-sed -i "s:\(.*<entando-k8s-custom-model.version>\)\(.*\)\(</entando-k8s-custom-model.version>.*\):\1${MODEL_VERSION}\3:g" pom.xml
-sed -i "s:\(.*<entando-k8s-operator-common.version>\)\(.*\)\(</entando-k8s-operator-common.version>.*\):\1${COMMON_VERSION}\3:g" pom.xml
+MODEL_VERSION=$(curl -v -X GET "https://nexus-jx.apps.serv.run/service/rest/v1/search/assets/download?sort=version&repository=maven-releases&maven.groupId=org.villanova&maven.artifactId=villanova-k8s-custom-model" -H "accept: application/json" 2>&1 | awk -F "/" '/Location/ {print $9}')
+COMMON_VERSION=$(curl -v -X GET "https://nexus-jx.apps.serv.run/service/rest/v1/search/assets/download?sort=version&repository=maven-releases&maven.groupId=org.villanova&maven.artifactId=villanova-k8s-operator-common" -H "accept: application/json" 2>&1 | awk -F "/" '/Location/ {print $9}')
+sed -i "s:\(.*<villanova-k8s-custom-model.version>\)\(.*\)\(</villanova-k8s-custom-model.version>.*\):\1${MODEL_VERSION}\3:g" pom.xml
+sed -i "s:\(.*<villanova-k8s-operator-common.version>\)\(.*\)\(</villanova-k8s-operator-common.version>.*\):\1${COMMON_VERSION}\3:g" pom.xml
 git add pom.xml
 mvn clean verify -DpreDeploymentTestGroups=in-process -Ppre-deployment-verification
                                 ]]>
@@ -706,7 +706,7 @@ mvn clean verify -DpreDeploymentTestGroups=in-process -Ppre-deployment-verificat
             This profile is only executed once all Docker images have been built, and are ready for deployment
             to Kubernetes. The assumption here is that there will be some form of inter-process communication with
             the code that has been deployed to Kubernetes, exposed using Ingresses and/or Routes. Standard
-            connectivity with Kubernetes will be provided by means of the entando.default.routing.suffix
+            connectivity with Kubernetes will be provided by means of the villanova.default.routing.suffix
             system property. No code coverage will be done here.
             -->
             <id>post-deployment-verification</id>
